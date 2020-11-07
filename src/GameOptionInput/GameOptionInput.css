@@ -1,0 +1,7 @@
+.game-option-block {
+    display: flex;
+}
+
+.game-option-name {
+    margin-right: 10px;
+}
