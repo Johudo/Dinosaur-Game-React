@@ -50,7 +50,6 @@ class App extends Component {
                     codeData={ this.state.codeData }
                     gameState={ this.state.gameState }
                     setGameState={ this.setGameState }
-                    ref={ this.gameWindowRef }
                 />
 
                 <GameOptionsWindow

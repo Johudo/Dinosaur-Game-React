@@ -1,0 +1,15 @@
+.wall-block {
+    position: absolute;
+
+    background-color: lightgreen;
+
+    z-index: 1;
+}
+
+.top-wall {
+    background-color: lightseagreen;
+}
+
+.bottom-wall {
+    background-color: lightcoral;
+}
