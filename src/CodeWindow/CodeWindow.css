@@ -6,3 +6,11 @@
     display: flex;
     align-items: stretch;
 }
+
+.code-window-button__disabled {
+    background-color: lightcoral !important;
+}
+
+.code-window-button {
+    background-color: lightgreen;
+}

@@ -11,16 +11,32 @@ class App extends Component {
         
         this.state = {
             gameWindowWidth: 10,
-            gameWindowHeight: 6
+            gameWindowHeight: 6,
+
+            gameState: 'stopped',
+            codeData: []
         }
     }
 
 
     updateGameOptinons = (newGameWindowWidth, newGameWindowHeight) => {
-        console.log(newGameWindowWidth, newGameWindowHeight)
         this.setState({
             gameWindowWidth: newGameWindowWidth,
             gameWindowHeight: newGameWindowHeight
+        });
+    }
+
+
+    setCodeData = async (newCodeData) => {
+        await this.setState({
+            codeData: newCodeData
+        });
+    }
+
+
+    setGameState = async (newState) => {
+        await this.setState({
+            gameState: newState
         });
     }
 
@@ -29,14 +45,23 @@ class App extends Component {
         return (
             <div className="container">
                 <GameWindow
-                    gameWindowWidth={this.state.gameWindowWidth}
-                    gameWindowHeight={this.state.gameWindowHeight} 
+                    gameWindowWidth={ this.state.gameWindowWidth }
+                    gameWindowHeight={ this.state.gameWindowHeight } 
+                    codeData={ this.state.codeData }
+                    gameState={ this.state.gameState }
+                    setGameState={ this.setGameState }
+                    ref={ this.gameWindowRef }
                 />
 
                 <GameOptionsWindow
                     updateGameOptinons={ this.updateGameOptinons }
                 />
-                <CodeWindow />  
+
+                <CodeWindow 
+                    setCodeData={ this.setCodeData }
+                    setGameState={ this.setGameState }
+                    gameState={ this.state.gameState }
+                />  
             </div>
         )
     }

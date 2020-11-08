@@ -8,7 +8,7 @@ class CodeEditor extends Component {
         super(props);
 
         this.state = {
-            codeText: ''
+            codeText: 'Jump(3);\nSit();\nRun(4);'
         }
 
         this.avalibleCommands = [
@@ -57,7 +57,7 @@ class CodeEditor extends Component {
                     let argument = line.substr(
                         line.indexOf('(') + 1,
                         line.indexOf(')') - line.indexOf('(') - 1
-                    );
+                    ) || 1;
 
                     programCommands.push({
                         command: this.avalibleCommands[regExpIndex].command,
@@ -70,12 +70,24 @@ class CodeEditor extends Component {
 
             if (lineError) {
                 console.error("Ошибка в строке #" + lineIndex + ":\n", line)
+                this.props.setCodeData([]);
                 return false
             }
         }
 
-        console.log(programCommands);
+        this.props.setCodeData(programCommands);
         return true
+    }
+
+
+    runCode() {
+        if( this.checkCodeTextErrors() )
+            this.props.setGameState('runned')
+    }
+
+
+    stopCode() {
+        this.props.setGameState('stopping')
     }
 
 
@@ -85,9 +97,25 @@ class CodeEditor extends Component {
                 <CodeTextarea changeCodeText={ this.changeCodeText } />
 
                 <button 
-                    className='code-run-button'
-                    onClick={ () => this.checkCodeTextErrors() }
+                    className={
+                        this.props.gameState === 'stopped' ? 'code-window-button code-run-button' : 'code-window-button code-run-button code-window-button__disabled code-run-button__disabled'
+                    }
+                    onClick={ () => this.runCode() }
+                    disabled={
+                        this.props.gameState === 'stopped' ? false : true
+                    }
                 >Run Code</button>
+
+                <button 
+                    className={
+                        this.props.gameState === 'runned' ? 'code-window-button code-stop-button' : 'code-window-button code-stop-button code-window-button__disabled code-stop-button__disabled'
+                    }
+                    onClick={ () => this.stopCode() }
+                    disabled={
+                        this.props.gameState === 'runned' ? false : true
+                    }
+                >Stop Code</button>
+
             </div>
         )
     }
